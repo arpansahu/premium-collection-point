@@ -1,0 +1,82 @@
+
+{% extends 'branch/branchbase.html' %}
+{% load static %}
+{% block content %}
+    
+    <style>
+        .col-1 {
+            max-width: 800px;
+/*             padding: 30px; */
+/*             float: left; */
+/*             height: 100%; */
+/*             z-index: 1010101010 */
+		position: relative;
+    		display: flex;
+    		flex-direction: column;
+        }
+
+        .col-2 {
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
+            float: right;
+            height: 100%;
+            z-index: 1010101010
+        }
+	    .bi-bigWallet-fill{
+		    position:relative;
+		    left:30%;
+	    }
+
+
+    </style>
+
+
+    <div style="/* height: 50%; *//* width: 100%; *//* padding: 20px; */display: flex;justify-content: space-around;flex-wrap: wrap;" >
+
+
+
+            <div class="col-1"  >
+                    <svg  width="10em" height="10em" position= "relative" left= "30%" viewBox="0 0 16 16" class="bi bi-bigWallet-fill" fill="#2b91ff" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542.637 0 .987-.254 1.194-.542.226-.314.306-.705.306-.958a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                        <path d="M16 6.5h-5.551a2.678 2.678 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5c-.963 0-1.613-.412-2.006-.958A2.679 2.679 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-6z"/>
+                    </svg> 
+                <h3 class="btn btn-outline-primary">
+                    Your balance is :   {{ request.user.walletBalance|floatformat:2 }}
+                </h3>
+                <a class="btn btn-outline-primary" href="{% url 'mybranchearnings' %}">&#x20B9 My Earnings</a>
+                <a class="btn btn-outline-primary" href="{% url 'myalladddmoney' %}">Check All transactions</a>
+                <a class="btn btn-outline-primary" href="{% url 'addmoney' %}">Click here if you already have a coupon code</a>
+
+            </div>
+
+            <div  class="col-2" style=" border-color: darkgrey;" >
+
+
+                <form method="post" class="contact1-form validate-form" style="max-width: 300px">
+                    {% csrf_token %}
+
+                    <span class="contact1-form-title">
+                        Add money to your wallet
+                    </span>
+
+
+
+                    <div class="container-contact1-form-btn">
+                        <button  type="submit"  value="Submit" class="contact1-form-btn">
+                            <span>
+                                Proceed
+                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+
+			    </form>
+
+
+            </div>
+
+    </div>
+
+
+{% endblock %}

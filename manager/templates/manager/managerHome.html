@@ -1,0 +1,151 @@
+{% extends 'manager/managerBase.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+    <style>
+        .form-inline {
+          display: flex;
+          flex-flow: row wrap;
+          align-items: center;
+        }
+
+        /* Add some margins for each label */
+        .form-inline label {
+          margin: 5px 10px 5px 0;
+        }
+
+        /* Style the input fields */
+        .form-inline input {
+          vertical-align: middle;
+          margin: 5px 10px 5px 0;
+          padding: 10px;
+          background-color: #fff;
+          border: 1px solid #ddd;
+        }
+
+        /* Style the submit button */
+        .form-inline button {
+          padding: 10px 20px;
+          background-color: dodgerblue;
+          border: 1px solid #ddd;
+          color: white;
+        }
+
+        .form-inline button:hover {
+          background-color: royalblue;
+        }
+
+        /* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
+        @media (max-width: 800px) {
+          .form-inline input {
+            margin: 10px 0;
+          }
+
+          .form-inline {
+            flex-direction: column;
+            align-items: stretch;
+          }
+        }
+        .col-1 {
+            max-width: 800px;
+            padding: 30px;
+            float: left;
+            height: 50%;
+            z-index: 1010101010
+        }
+
+        .col-2 {
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
+            float: top;
+            height: 50%;
+            z-index: 1010101010
+        }
+
+
+    </style>
+
+
+    <div style="height: 100%; width: 100%; padding: 20px" >
+
+            <div   style=" border-color: darkgrey;" >
+
+
+<!--                 <form method="post" class="form-inline" style="background-color: black"> -->
+		    <form method="post" class="form-inline" style="background-color: transparent; margin-left: 100px;">
+                    {% csrf_token %}
+
+<!--                     <h3 style="font-weight: bolder;color: white;">Approve Order</h3> -->
+			 <h3 style="font-weight: bolder; margin-right: 50px; margin-left: 50px; color: #6e6666; ">Approve Order</h3>
+
+
+                    <div  data-validate = "Message is required">
+                        <input class="input1" type="text" name="orderId" value="Order Id" onclick="this.value=''">
+                        <span class="shadow-input1"></span>
+                    </div>
+                    <div  data-validate = "Message is required">
+                        <input class="input1" type="text" name="branchEmail" value="Branch Email" onclick="this.value=''">
+                        <span class="shadow-input1"></span>
+                    </div>
+
+
+                    <div class="container-contact1-form-btn">
+                        <button  type="submit"  value="Submit" class="contact1-form-btn">
+                            <span>
+                                Proceed
+                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+
+			    </form>
+
+
+            </div>
+
+
+            <div  style="margin-left: 100px" >
+
+                <table class="table table-hover " style="counter-reset: rowNumber;overflow:scroll;max-width: 400px; margin-left: 200px;  ">
+                    <caption style="color: black; font-weight: bolder; caption-side: top; text-align: center; margin-top: 70px;">Premium Orders</caption>
+                    <thead>
+                        </tr>
+                        <tr>
+                            <th style="color: black;font-weight: bolder  ;" scope="col">OrderId</th>
+                            <th style="color: black;font-weight: bolder  ;"scope="col">PolicyNumber</th>
+                            <th style="color: black;font-weight: bolder  ;"scope="col">PolicyHolder</th>
+                            <th style="color: black;font-weight: bolder  ;"scope="col">Amount</th>
+                            <th style="color: black;font-weight: bolder  ;"scope="col">Due</th>
+                            <th style="color: black;font-weight: bolder  ;"scope="col">Branch</th>
+                            <th style="color: black;font-weight: bolder  ;"scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for i in allorders %}
+                            <tr style="color: black;font-weight: bolder  ;">
+                                {% for z in i.values %}
+
+                                        <td>{{ z }}</td>
+
+                                {% endfor %}
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+
+            </div>
+
+
+    </div>
+
+
+
+{% endblock %}

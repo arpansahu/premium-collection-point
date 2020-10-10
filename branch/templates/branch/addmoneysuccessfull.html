@@ -1,0 +1,63 @@
+
+{% extends 'branch/branchbase.html' %}
+
+{% load static %}
+{% block content %}
+
+
+    <style>
+        .col-1 {
+            max-width: 800px;
+            padding: 30px;
+            float: left;
+            height: 100%;
+            z-index: 1010101010
+        }
+
+        .col-2 {
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
+            float: right;
+            height: 100%;
+            z-index: 1010101010
+        }
+
+
+    </style>
+
+
+    <div style="height: 100%; width: 100%; padding: 20px" >
+
+
+
+            <div   style=" border-color: darkgrey;" >
+
+
+
+                            <span class="contact1-form-btn">
+                                Money add Successsfull
+
+                            </span>
+
+                    <br>
+                                Click here to Go to Branch Home
+                                <a class="btn btn-outline-primary" href="{% url 'branchHome' %}">Home</a>
+
+
+            </div>
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
+
+
+
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'policyNumberForm/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'policyNumberForm/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'policyNumberForm/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'policyNumberForm/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'policyNumberForm/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'policyNumberForm/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'policyNumberForm/css/main.css' %}">
+<!--===============================================================================================-->
+
+        <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+<style type="text/css">
+
+    html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.container {
+  max-width: 960px;
+}
+
+
+.pricing-header {
+  max-width: 700px;
+}
+
+.card-deck .card {
+  min-width: 220px;
+}
+
+
+</style>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <a href="{% url 'login' %}"><img style="border-radius: 10px" src="{% static 'PCP.png' %}" alt="Premium Collection Point logo image" width="75  " height="75"></a>
+  <h5 class="my-0 mr-md-auto font-weight-normal">PremiumCollectionPoint</h5>
+  <nav class="my-2 my-md-0 mr-md-3">
+      {% if request.user.is_authenticated %}
+            <p>
+                <a class="btn btn-outline-primary" href="{% url 'branchHome' %}">Home</a> |
+                <a class="btn btn-outline-primary" href="{% url 'wallet' %}">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-wallet-fill" fill="#2b91ff" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542.637 0 .987-.254 1.194-.542.226-.314.306-.705.306-.958a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                        <path d="M16 6.5h-5.551a2.678 2.678 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5c-.963 0-1.613-.412-2.006-.958A2.679 2.679 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-6z"/>
+                    </svg>
+
+                    Rs : {{ request.user.walletBalance|floatformat:2 }}</a> |
+                <a class="btn btn-outline-primary" href="{% url 'allordersbranch' %}">AllPremiumOrders</a> |
+                <a class="btn btn-outline-primary" href="{{ request.user.drive }}" target="_blank">
+                    <i class="fab fa-google-drive"></i> Drive
+                </a> |
+                <a class="btn btn-outline-primary" href="{% url 'password_change' %}">Change Password</a> |
+                <a class="btn btn-outline-primary" href="{% url 'logout' %}" >Logout </a>
+            </p>
+            <p>Welcome to your branch , {{ request.user.username  }} --- {{ request.user.email }} </p>
+
+      {% else %}
+            <p>
+                <a class="btn btn-outline-primary" href="{% url 'login' %}">Login</a>
+            </p>
+      {% endif %}
+  </nav>
+
+</div>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+</div>

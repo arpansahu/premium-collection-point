@@ -1,0 +1,106 @@
+{% extends 'branch/branchbase.html' %}
+{% load static %}
+{% block content %}
+
+    <script>
+
+        var myApp = new function () {
+            this.printTable = function () {
+                var tab = document.getElementById('tab');
+                var win = window.open('', '', 'height=700,width=700');
+                win.document.write(tab.outerHTML);
+                win.document.close();
+                win.print();
+            }
+        }
+    </script>
+
+    <style>
+        .col-1 {
+            float: left;
+    		display: flex;
+    		flex-direction: column;
+
+            max-width: 50%;
+        }
+
+        .col-2 {
+
+            max-width: 50%;
+    		margin-top: 10px;
+            float :right;
+    		display: flex;
+    		justify-content: space-evenly;
+    		z-index: 1010101010;
+
+        }
+         #total {
+          text-align:right;
+        }
+    </style>
+
+    <span style="font-family: Montserrat-ExtraBold;position: center;text-align: center">
+                <h1>Refer n Earn</h1>
+    </span>
+    <div style="display: flex;justify-content: space-around;position: relative;/* flex-wrap: wrap-reverse; */flex-wrap: wrap;" >
+
+            <div class="col-1"   >
+
+                <h3 >
+                    Earn 10 percent of every person monthly income you refer for lifetime.
+
+                </h3><br/>
+                <h6> Terms and Conditions apply </h6>
+                <img style=" margin-top: 5px; width :250px; height: 250px" src="{% static 'Refer N Earn.png' %}">
+
+            </div>
+
+            <div  class="col-2" style=" border-color: darkgrey;" >
+                <form method="post" class="contact1-form validate-form" >
+                    {% csrf_token %}
+                    <span class="contact1-form-title">
+                        Enter Details Below
+                    </span>
+
+                    <div class="wrap-input1 validate-input" data-validate = "Message is required">
+                        <input class="input1" type="text" value="Full Name" name="fullname">
+                        <span class="shadow-input1"></span>
+                    </div>
+
+                    <div class="wrap-input1 validate-input" data-validate = "Message is required">
+                        <input class="input1" type="text" value="Email Id" name="emailid">
+                        <span class="shadow-input1"></span>
+                    </div>
+
+                    <div class="wrap-input1 validate-input" data-validate = "Message is required">
+                        <input class="input1" type="text" value="Mob no" name="mobno">
+                        <span class="shadow-input1"></span>
+                    </div>
+
+                    <div class="wrap-input1 validate-input" data-validate = "Message is required">
+                        <input class="input1" type="text" value="ADHAAR" name="adhaar">
+                        <span class="shadow-input1"></span>
+                    </div>
+
+                    <div class="wrap-input1 validate-input" data-validate = "Message is required">
+                        <input class="input1" type="text" value="PAN" name="pan">
+                        <span class="shadow-input1"></span>
+                    </div>
+
+                    <div class="container-contact1-form-btn">
+                        <button  type="submit"  value="Submit" class="contact1-form-btn">
+                            <span>
+                                Proceed
+                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+
+			    </form>
+
+            </div>
+
+    </div>
+
+
+{% endblock %}

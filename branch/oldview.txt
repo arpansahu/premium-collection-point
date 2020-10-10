@@ -1,0 +1,384 @@
+import time
+from selenium import webdriver
+import random
+import string
+from django.shortcuts import render, redirect
+from order.models import Order, moneyOrder
+import datetime
+import os
+from account.models import Account
+
+# Create your views here.
+
+orderDetails = {}
+
+
+def myAllAddMoney(request):
+    if request.user.is_authenticated:
+        if request.user.is_kycied:
+            if request.user.is_staff:
+                return redirect('managerHome')
+
+            if request.POST:
+                datefrom = request.POST['dateFrom']
+                dateto = request.POST['dateTo']
+                # print(datetime.date.today())
+                # print(datefrom, dateto)
+
+                allorderslist = []
+
+                allordersobjects0 = moneyOrder.objects.filter(orderCreatedBy=request.user.email)
+                allordersobjects1 = allordersobjects0.filter(orderStatus=True)
+
+                allordersobjects = allordersobjects1.filter(date__range=[datefrom, dateto])
+
+                for j in allordersobjects:
+                    temporder = {}
+
+                    temporder['transid'] = j.id
+                    temporder['Amount'] = j.orderAmount
+                    temporder['Date'] = j.date
+                    temporder['Time'] = j.time
+                    temporder['Mode'] = j.orderMode
+                    temporder['From'] = j.From
+                    temporder['Remark'] = j.orderRemark
+
+                    allorderslist.append(temporder)
+
+                return render(request, 'branch/myAllAddMoney.html', {'allorders': allorderslist})
+
+            allOrdersOfCurrBranch = []
+
+            ordersOfBranchI0 = moneyOrder.objects.filter(orderCreatedBy=request.user.email)
+            ordersOfBranchI1 = ordersOfBranchI0.filter(orderStatus=True)
+            ordersOfBranchI = ordersOfBranchI1.filter(date=datetime.date.today())
+
+            for j in ordersOfBranchI:
+                temporders = {}
+
+                temporders['transid'] = j.id
+                temporders['Amount'] = j.orderAmount
+                temporders['Date'] = j.date
+                temporders['Time'] = j.time
+                temporders['Mode'] = j.orderMode
+                temporders['From'] = j.From
+                temporders['Remark'] = j.orderRemark
+
+                allOrdersOfCurrBranch.append(temporders)
+
+            return render(request, 'branch/myAllAddMoney.html', {'allorders': allOrdersOfCurrBranch})
+        else:
+            return redirect('getkyc')
+    return redirect('login')
+
+
+def addMoneyPre(request):
+    if request.user.is_authenticated:
+        if request.user.is_kycied:
+            if request.user.is_staff:
+                return redirect('managerHome')
+            if request.POST:
+                tranMode = request.POST['tranMode']
+                From = request.POST['from']
+                amount = request.POST['amount']
+
+                moneyOrder.create(amount, request.user.email, request.user.supervisor, generateCouponCode(amount),
+                                  tranMode,
+                                  From).save()
+
+                return redirect('addmoney')
+
+            return render(request, 'branch/addmoneyPre.html')
+        else:
+            return redirect('getkyc')
+    return redirect('login')
+
+
+def allOrdersBranch(request):
+    if request.user.is_authenticated:
+        if request.user.is_kycied:
+            if request.user.is_staff:
+                return redirect('managerHome')
+
+            if request.POST:
+                datefrom = request.POST['dateFrom']
+                dateto = request.POST['dateTo']
+                print(datetime.date.today())
+                print(datefrom, dateto)
+
+                allorderslist = []
+
+                allordersobjects0 = Order.objects.filter(createdBy=request.user.email)
+                allordersobjects = allordersobjects0.filter(date__range=
+                                                            [datefrom, dateto])
+
+                for j in allordersobjects:
+                    temporder = {}
+
+                    temporder['id'] = j.id
+                    temporder['policyNumber'] = j.policyNumber
+                    temporder['policyHolder'] = j.policyHolderName
+                    temporder['amount'] = j.amount
+                    temporder['Due'] = j.dueDate
+                    temporder['createdBy'] = j.createdBy
+                    temporder['completed'] = j.completed
+
+                    allorderslist.append(temporder)
+
+                return render(request, 'branch/allOrdersBranch.html', {'allorders': allorderslist})
+
+            allOrdersOfCurrBranch = []
+
+            ordersOfBranchI0 = Order.objects.filter(createdBy=request.user.email)
+            ordersOfBranchI = ordersOfBranchI0.filter(date=datetime.date.today())
+            for j in ordersOfBranchI:
+                temporders = {}
+
+                temporders['id'] = j.id
+                temporders['policyNumber'] = j.policyNumber
+                temporders['policyHolder'] = j.policyHolderName
+                temporders['amount'] = j.amount
+                temporders['Due'] = j.dueDate
+                temporders['createdBy'] = j.createdBy
+                temporders['completed'] = j.completed
+
+                allOrdersOfCurrBranch.append(temporders)
+
+            return render(request, 'branch/allOrdersBranch.html', {'allorders': allOrdersOfCurrBranch})
+        else:
+            return redirect('getkyc')
+    return redirect('login')
+
+
+def generateCouponCode(amount):
+    letters = string.ascii_lowercase
+    result_str = ''.join(random.choice(letters) for i in range(20))
+    return result_str + str(amount)
+
+
+def fetchPremiumdetails(policyNumber, createdBy):
+
+    # driver = webdriver.ChromiumEdge(r"C:\Users\arpan\OneDrive\Projects\GetTodaysTrans\msedgedriver.exe")
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+
+    try:
+        driver.get("https://www.amazon.in/hfc/bill/insurance?ref_=apay_deskhome_Insurance")
+
+        elem = driver.find_element_by_id('a-autoid-1-announce')
+        elem.click()
+        elem = driver.find_element_by_id('INSURANCE_0')
+        elem.click()
+
+        time.sleep(3)
+        policnumber = driver.find_element_by_xpath('//*[@id="Policy Number"]')
+        policnumber.send_keys(str(policyNumber))
+        time.sleep(3)
+
+        emailid = driver.find_element_by_xpath('//*[@id="Email id"]')
+        emailid.send_keys(str(createdBy))
+        time.sleep(3)
+
+        driver.find_element_by_id('fetchBillActionId-announce').click()
+        time.sleep(3)
+
+        policyHolderName = driver.find_element_by_xpath("//table/tbody/tr[2]/td[2]").text
+        amount = driver.find_element_by_xpath("//table/tbody/tr[3]/td[2]").text
+        dueDate = driver.find_element_by_xpath("//table/tbody/tr[4]/td[2]").text
+
+        orderDetails['policyHolderName'] = policyHolderName
+        orderDetails['amount'] = amount
+        orderDetails['dueDate'] = dueDate
+        orderDetails['status'] = False
+
+        # except:
+        # fetchPremiumdetails(policyNumber, createdBy)
+
+        rawamount = ''
+        for i in amount:
+            if i in '1234567890.':
+                rawamount = rawamount + i
+
+        rawamount = float(rawamount)
+
+        orderDetails['rawamount'] = rawamount
+
+        # print(orderDetails)
+        driver.quit()
+        #return [policyNumber, policyHolderName, amount, rawamount, dueDate, createdBy, False]
+        return 1
+
+    except:
+        driver.close()
+        return 0
+
+
+def getcopmpleted(completed):
+    if completed:
+        return 'Successfull'
+    return 'InProgress'
+
+
+def confirmOrder(request):
+    if request.user.is_authenticated:
+        if request.user.is_kycied:
+            if request.user.is_staff:
+                return redirect('managerHome')
+            if request.POST:
+                Order.create(orderDetails['policyNumber'], orderDetails['policyHolderName'],
+                                     orderDetails['rawamount'],
+                                     orderDetails['dueDate'], orderDetails['createdBy'], request.user.supervisor,
+                                     orderDetails['status']).save()
+
+                request.user.walletBalance -= orderDetails['rawamount']
+                request.user.save()
+
+                return redirect('orderPlaced')
+
+            return render(request, 'branch/confirmorder.html', orderDetails)
+        else:
+            return redirect('getkyc')
+    return redirect('login')
+
+
+def orderPlaced(request):
+    if request.user.is_authenticated:
+        if request.user.is_kycied:
+            if request.user.is_staff:
+                return redirect('managerHome')
+            return render(request, 'branch/orderplaced.html', orderDetails)
+        else:
+            return redirect('getkyc')
+
+    return redirect('login')
+
+
+def branchHome(request):
+    if request.user.is_authenticated:
+        if request.user.is_kycied:
+            if request.user.is_staff:
+                return redirect('managerHome')
+            if request.POST:
+                orderDetails.clear()
+                policyNumber = request.POST['policyNumber']
+                # print("policynumber is  :   ", policyNumber)
+
+                orderDetails['policyNumber'] = policyNumber
+                createdBy = request.user.email
+                orderDetails['createdBy'] = createdBy
+
+                if fetchPremiumdetails(policyNumber, createdBy):
+                    time.sleep(5)
+                    return redirect('confirmOrder')
+                else:
+                    return redirect('branchHome')
+
+            myOrder = Order.objects.filter(createdBy=str(request.user.email))
+            myOrder2 = myOrder.filter(date=datetime.date.today()).order_by('time')
+            array = []
+            count = 1
+            for i in myOrder2:
+                # [count, i.policyNumber, i.policyHolderName, i.amount, i.dueDate, i.completed]
+                array.append(
+                    {'count': count, 'policyNumber': i.policyNumber, 'policyHolderName': i.policyHolderName,
+                     'amount': i.amount,
+                     'dueDate': i.dueDate, 'status': getcopmpleted(i.completed)})
+                count = count + 1
+            # print(array)
+
+            return render(request, 'branch/branchHome.html', {'myOrders': array})
+
+        else:
+            return redirect('getkyc')
+
+    return redirect('login')
+
+
+def wallet(request):
+    if request.user.is_authenticated:
+        if request.user.is_kycied:
+            if request.user.is_staff:
+                return redirect('managerHome')
+            if request.POST:
+                return redirect('addmoneypre')
+
+            return render(request, 'branch/wallet.html')
+
+        else:
+            return redirect('getkyc')
+    return redirect('login')
+
+
+def moneyOrderNotSuccessFull(request):
+    if request.user.is_authenticated:
+        if request.user.is_kycied:
+            if request.user.is_staff:
+                return redirect('managerHome')
+        else:
+            return redirect('getkyc')
+
+        return render(request, 'branch/moneyOrderNotSuccessfulll.html')
+
+    return redirect('login')
+
+
+def addmoney(request):
+    if request.user.is_authenticated:
+        if request.user.is_kycied:
+            if request.user.is_staff:
+                return redirect('managerHome')
+            if request.POST:
+
+                fetchedcouponCode = request.POST['couponCode']
+                fetchTransId = request.POST['transId']
+
+                moneyorder = moneyOrder.objects.filter(id=fetchTransId).first()
+
+                if not moneyorder:
+                    return redirect('wrongcouponcode')
+
+                # print(dataformoneyorder)
+
+                if request.user.email == moneyorder.orderCreatedBy and fetchedcouponCode == moneyorder.orderCouponCode \
+                        and not moneyorder.orderStatus and moneyorder.isApproved:
+
+                    request.user.walletBalance += moneyorder.orderAmount
+                    request.user.save()
+
+                    moneyorder.orderStatus = True
+                    moneyorder.orderRemark = 'Successfull'
+                    moneyorder.save()
+
+                    return redirect('addmoneysuccessfull')
+
+                else:
+                    return redirect('moneyordernotsuccessfull')
+            return render(request, 'branch/addmoney.html')
+        else:
+            return redirect('getkyc')
+
+    return redirect('login')
+
+
+def addMoneySuccessfull(request):
+    if request.user.is_authenticated:
+        if request.user.is_kycied:
+            if request.user.is_staff:
+                return redirect('managerHome')
+            return render(request, 'branch/addmoneysuccessfull.html')
+        return redirect('getkyc')
+    return redirect('login')
+
+
+def wrongCouponCode(request):
+    if request.user.is_authenticated:
+        if request.user.is_kycied:
+            if request.user.is_staff:
+                return redirect('managerHome')
+            return render(request, 'branch/wrongCouponCode.html')
+        return redirect('getkyc')
+    return redirect('login')

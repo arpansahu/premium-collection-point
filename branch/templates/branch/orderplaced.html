@@ -1,0 +1,36 @@
+{% extends 'branch/branchbase.html' %}
+{% load static %}
+
+
+{% block content %}
+                <div style="
+                                        max-width: 500px;
+                                        padding: 100px;
+                                        text-align: center;
+                                        margin-left: 400px;
+                                        margin-right: 400px;
+                                        height: 100%;
+                                        z-index: 1010101010;"
+                >
+                <form method="post" class="contact1-form validate-form" >
+                    {% csrf_token %}
+                    <span class="contact1-form-title">
+                        <div class="container-contact1-form-btn">
+                            <span class="contact1-form-btn">
+                                    Order Successfully placed
+                            </span>
+                        </div>
+                    </span>
+
+
+                    <div class="container-contact1-form-btn">
+
+                            <span  class="contact1-form-btn" style="background-color: black">
+                                   <a class="btn btn-outline-primary" href="{% url 'branchHome' %}">Go to Your Branch</a>
+                            </span>
+
+                    </div>
+
+			    </form>
+                </div>
+{% endblock %}

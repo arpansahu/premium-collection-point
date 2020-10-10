@@ -1,0 +1,124 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <title>PCP</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <style type="text/css">
+
+
+
+        html {
+          font-size: 14px;
+        }
+        @media (min-width: 768px) {
+          html {
+            font-size: 16px;
+          }
+        }
+
+        .container {
+          max-width: 960px;
+        }
+
+
+        .pricing-header {
+          max-width: 700px;
+        }
+
+        .card-deck .card {
+          min-width: 220px;
+        }
+
+    </style>
+
+</head>
+<body style="   background-image: linear-gradient(-90deg,  #2f2e41, white);   ">
+
+
+        <!--Body-->
+    <style type="text/css">
+        .main{
+            min-height: 100vh;
+            height: 100%;
+            width: 600px;
+            margin: auto;
+            border: 3px solid #fff;
+            padding: 20px;
+        }
+
+        .main-child {
+            width: 50%;
+            float: right;
+            padding: 50px;
+            margin: 50px auto auto;
+        }
+
+        .main-child-image {
+            width: 50%;
+            float: left;
+            padding: 50px;
+            margin: auto;
+
+        }
+    </style>
+
+    <div class="main," style="size: auto; margin-top: 100px">
+            {% block content %}
+
+                <div class="d-flex flex-column pb-3" style=" width: 50%; float: left; padding: 20px; margin: 50px auto auto;">
+                        <img style="border-radius: 20px" class="img-fluid mx-auto d-block" src="{% static 'PCP.png' %}" alt="PCP logo image" width="350  " height="350">
+                </div>
+
+                <div class="main-child" >
+                    <form class="form-signin" method="post">{% csrf_token %}
+                      <h1 class="h3 mb-3 font-weight-normal" style="margin: auto; text-align: center; color: white" >Login</h1>
+
+                      <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+
+                      <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+
+                      {% for field in login_form %}
+                          <p>
+                            {% for error in field.errors %}
+                              <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                          </p>
+                      {% endfor %}
+                      {% if login_form.non_field_errors %}
+                        <div style="color: red">
+                          <p>{{login_form.non_field_errors}}</p>
+                        </div>
+
+                      {% endif %}
+
+                      <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+
+                    </form>
+
+                    <div class="d-flex flex-column">
+                      <a class="m-auto" href="{% url 'password_reset' %}">Reset password</a>
+                    </div>
+
+                </div>
+
+
+
+
+            {% endblock %}
+    </div>
+    <!--End Body -->
+
+
+</body>
+</html>

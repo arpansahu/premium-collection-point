@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Collection Point</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{%  static 'Home/Home.css' %}">
+</head>
+<body>
+    <div id="background">
+        <div id="navbar">
+            <div id="logo">
+                <img src="{% static 'logo.png' %}" alt="">
+            </div>
+            <div id="list">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Blog</a>
+                <a href="">Contact</a>
+            </div>
+            <div id="profile">
+                <a href="{% url 'login' %}"><h5>Login your Profile</h5></a>
+                <i class="ri-user-3-fill"></i>
+            </div>
+        </nav>
+    </div>
+    <div id="sidebar">
+        <div id="search">
+            <i class="ri-search-line"></i></div>
+        <div id="socialLinks">
+            <i class="ri-facebook-fill"></i>
+            <i class="ri-twitter-fill"></i>
+            <i class="ri-instagram-line"></i>
+        </div>
+        <div id="info">
+        <i class="ri-information-line"></i>
+        </div>
+    </div>
+    <div id="container">
+        <div id="slider">
+            <div class="text">
+                <h1 style="color: black">About Us </h1>
+                <p style="color: black">We offer a unique platform for hassle-free collection and payment of policy premium.</p>
+                <button style="color: black;background-color: #8040bf" ><a href="https://wa.me/message/SOFKCHZFBROUH1" target="_blank"><i class="fa fa-whatsapp" style="font-size:24px"></i> Learn More</a></button>
+            </div>
+            <div class="text">
+                <h1 style="color: black"> Why us? </h1>
+                <p style="color: black"> Now you can pay your policy premium right from your home with larger incentives... </p>
+                <button style="color: black;background-color: #8040bf" ><a href="https://wa.me/message/SOFKCHZFBROUH1" target="_blank"><i class="fa fa-whatsapp" style="font-size:24px"></i> Learn More</a></button>
+
+            </div>
+            <div class="text">
+                <h1 style="color: black"> Incentive </h1>
+                <p style="color: black">We offer you 0.5% of total premiuim collected from your account in a month.</p>
+                <button style="color: black;background-color: #8040bf" ><a href="https://wa.me/message/SOFKCHZFBROUH1" target="_blank"><i class="fa fa-whatsapp" style="font-size:24px"></i> Learn More</a></button>
+            </div>
+            <div class="text">
+                <h1 style="color: black"> Get Started </h1>
+                <p style="color: black">Click the button below to know more about us and get started.</p>
+                <button style="color: black;background-color: #8040bf" ><a href="https://wa.me/message/SOFKCHZFBROUH1" target="_blank"><i class="fa fa-whatsapp" style="font-size:24px"></i> Learn More</a></button>
+            </div></div>
+    </div>
+    <div id="controller">
+        <div id="line1"></div>
+        <div id="line2"></div>
+        <div id="line3"></div>
+        <div id="line4"></div>
+        <div id="slide"></div>
+    </div>
+
+
+
+    <script src="{% static 'Home/Home.js' %}"></script>
+</body>
+</html>

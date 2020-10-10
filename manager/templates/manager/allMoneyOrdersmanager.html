@@ -1,0 +1,136 @@
+{% extends 'manager/managerBase.html' %}
+{% load static %}
+
+
+{% block content %}
+    <style href="{% static 'calenderForm/calenderForm.css' %}"></style>
+    <script href="{% static 'calenderForm/calenderForm.js' %}"></script>
+
+    <style>
+        .form-inline {
+          display: flex;
+          flex-flow: row wrap;
+          align-items: center;
+        }
+
+        /* Add some margins for each label */
+        .form-inline label {
+          margin: 5px 10px 5px 0;
+        }
+
+        /* Style the input fields */
+        .form-inline input {
+          vertical-align: middle;
+          margin: 5px 10px 5px 0;
+          padding: 10px;
+          background-color: #fff;
+          border: 1px solid #ddd;
+        }
+
+        /* Style the submit button */
+        .form-inline button {
+          padding: 10px 20px;
+          background-color: dodgerblue;
+          border: 1px solid #ddd;
+          color: white;
+        }
+
+        .form-inline button:hover {
+          background-color: royalblue;
+        }
+
+        /* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
+        @media (max-width: 800px) {
+          .form-inline input {
+            margin: 10px 0;
+          }
+
+          .form-inline {
+            flex-direction: column;
+            align-items: stretch;
+          }
+        }
+
+
+
+    </style>
+
+
+    <div style="height: 100%; width: 100%; padding: 20px" >
+
+            <div   style=" border-color: darkgrey;" >
+
+
+                <form method="post" class="form-inline" style="background-color: transparent">
+                    {% csrf_token %}
+
+                    <h4 style="font-weight: bolder;color: #666666;margin-left: 40px;">Select Dates From and To For Money Order</h4>
+
+
+                    <div  data-validate = "Message is required">
+                        <input class="input1" type="date" name="dateFrom" value="Date From" onclick="this.value=''">
+                        <span class="shadow-input1"></span>
+                    </div>
+                    <div  data-validate = "Message is required">
+                        <input class="input1" type="date" name="dateTo" value="Date to" onclick="this.value=''">
+                        <span class="shadow-input1"></span>
+                    </div>
+
+
+                    <div class="container-contact1-form-btn">
+                        <button  type="submit"  value="Submit" class="contact1-form-btn">
+                            <span>
+                                Proceed
+                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+
+			    </form>
+
+            </div>
+
+
+            <div style="margin-top: 70px">
+                <table class="table table-hover " style="counter-reset: rowNumber;overflow:scroll;max-width: 100%; table-layout: fixed  ">
+                    <caption style=" color: black;font-weight: bolder  ;caption-side: top;text-align: center;">Money Orders</caption>
+                    <thead>
+                        </tr>
+                        <tr>
+                            <th style="color: black;font-weight: bolder  ;word-wrap: break-word" scope="col">TransId</th>
+                            <th style="color: black;font-weight: bolder  ;word-wrap: break-word" scope="col">UserEmail</th>
+                            <th style="color: black;font-weight: bolder  ;word-wrap: break-word"scope="col">Amount</th>
+                            <th style="color: black;font-weight: bolder  ;word-wrap: break-word"scope="col">Date</th>
+                            <th style="color: black;font-weight: bolder  ;word-wrap: break-word"scope="col">Time</th>
+                            <th style="color: black;font-weight: bolder  ;word-wrap: break-word"scope="col">Mode</th>
+                            <th style="color: black;font-weight: bolder  ;word-wrap: break-word"scope="col">From</th>
+                            <th style="color: black;font-weight: bolder  ;word-wrap: break-word"scope="col">Status</th>
+                            <th style="color: black;font-weight: bolder  ;word-wrap: break-word"scope="col">Remark</th>
+                            <th style="color: black;font-weight: bolder  ;word-wrap: break-word"scope="col">CouponCode</th>
+                            <th style="color: black;font-weight: bolder  ;word-wrap: break-word"scope="col">Approved</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for i in allorders %}
+                            <tr style="color: black;font-weight: bolder  ;word-wrap: break-word">
+                                {% for z in i.values %}
+
+                                        <td>{{ z }}</td>
+
+                                {% endfor %}
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+
+
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'branch/branchbase.html' %}
+{% load static %}
+{% block policy %}
+
+
+    <div style="alignment: center;text-align: center;background-image: url({% static 'checkout.png' %}); width: 500px;height: 500px; border-radius: 30px; position: center ">
+        <h1 style="color: white"> Order details </h1>
+        <h4>Policy Number :{{ policyNumber }} </h4>
+        <h4>Policy Holder : {{ policyHolderName }} </h4>
+        <h4>Amount : {{ amount }} </h4>
+        <h4>Due : {{ dueDate }} </h4>
+    </div>
+
+{% endblock %}
+
+
+{% block content %}
+                <div style="
+                                        max-width: 500px;
+                                        padding: 100px;
+                                        text-align: center;
+                                        margin-left: 400px;
+                                        margin-right: 400px;
+                                        height: 100%;
+                                        z-index: 1010101010;"
+                >
+                <form method="post" class="contact1-form validate-form" >
+                    {% csrf_token %}
+                    <span class="contact1-form-title">
+                        <span>Order details</span><br>
+                    </span>
+                    <div style="text-align: justify">
+                        <p style="font-weight: bolder">
+                            Policy Number :         {{ policyNumber }}<br>
+                            Policy Holder :         {{ policyHolderName }}<br>
+                            Amount :                {{ amount }}<br>
+                            Due :                   {{ dueDate }}<br>
+                        </p><br>
+
+                    </div>
+
+                    <div class="container-contact1-form-btn">
+
+                        {% if request.user.walletBalance > rawamount %}
+
+                            <button  type="submit"  value="Submit" class="contact1-form-btn">
+                                <span>
+                                    Place Order
+                                    <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                </span>
+                            </button>
+
+
+                        {% else %}
+                            <span class="contact1-form-btn">
+                                    You Don't have sufficient balance
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+			    </form>
+                </div>
+{% endblock %}

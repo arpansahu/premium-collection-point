@@ -1,0 +1,24 @@
+{% extends 'branch/branchbase.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+    <div style="height: 90%; width: 100%; padding: 20px" >
+
+        <span class="contact1-form-title">
+                        No Bill Due
+        </span>
+        <div class="container-contact1-form-btn">
+                        <button  type="submit"  value="Submit" class="contact1-form-btn">
+                            <a href="{% url 'branchHome' %}" style="font-family: Montserrat-ExtraBold">
+                                Click here to pay Another Premium
+                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </button>
+        </div>
+    </div>
+
+
+{% endblock %}
