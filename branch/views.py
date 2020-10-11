@@ -357,7 +357,7 @@ def allOrdersBranch(request):
 
 
 def fetchPremiumdetails(policyNumber, createdBy, count):
-    driver = webdriver.ChromiumEdge(r"C:\Users\Administrator\Desktop\pcp\branch\msedgedriver.exe")
+    driver = webdriver.ChromiumEdge(r"C:\Users\Administrator\Desktop\awspcp\branch\msedgedriver.exe")
     #chrome_options = webdriver.ChromeOptions()
     #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     #chrome_options.add_argument("--headless")
