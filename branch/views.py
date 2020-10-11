@@ -503,7 +503,7 @@ def branchHome(request):
                     del orderDetails[policyNumber]
                 except:
                     pass
-                fetchPremiumdetails(policyNumber, request.user.email, 1)
+                fetchPremiumdetails(policyNumber, request.user.email, 2)
                 if orderDetails[policyNumber] == 'nobill':
                     return redirect('nobill')
 
