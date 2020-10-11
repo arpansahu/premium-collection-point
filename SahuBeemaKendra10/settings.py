@@ -88,10 +88,10 @@ WSGI_APPLICATION = 'SahuBeemaKendra10.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd36sm1a86n2ti4',
-        'USER': 'wepcurrtelgefr',
-        'PASSWORD': '889fafd75e2390a92b3f015a769c5d78821f24e84e26799ebe548ad49a066773',
-        'HOST': 'ec2-54-86-57-171.compute-1.amazonaws.com',
+        'NAME': 'pcp',
+        'USER': 'postgres',
+        'PASSWORD': 'sabmadar302',
+        'HOST': 'pcppostgres.cjwqj74uxovy.ap-south-1.rds.amazonaws.com',
         'PORT': '5432',
      }
 }
