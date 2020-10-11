@@ -17,10 +17,10 @@
                 <img src="{% static 'logo.png' %}" alt="">
             </div>
             <div id="list">
-                <a href="#">Home</a>
-                <a href="#">About</a>
-                <a href="#">Blog</a>
-                <a href="">Contact</a>
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'termandconditions' %}">Terms and Conditions</a>
+                <a href="{% url 'privacypolicy' %}">Privacy Policy</a>
+                <a href="{% url 'contactus' %}">Contact</a>
             </div>
             <div id="profile">
                 <a href="{% url 'login' %}"><h5>Login your Profile</h5></a>
@@ -32,9 +32,9 @@
         <div id="search">
             <i class="ri-search-line"></i></div>
         <div id="socialLinks">
-            <a class="ri-instagram-line" href=""></a>
-            <a class="ri-facebook-fill" href=""></a>
-            <a class="ri-twitter-fill" href="https://twitter.com/pcpointofficial"></a>
+            <a class="ri-instagram-line" href="https://www.instagram.com/pcpointofficial/" target="_blank"></a>
+            <a class="ri-facebook-fill" href="https://www.facebook.com/pcpointofficial" target="_blank"></a>
+            <a class="ri-twitter-fill" href="https://twitter.com/pcpointofficial" target="_blank"></a>
         </div>
         <div id="info">
         <i class="ri-information-line"></i>

@@ -17,8 +17,16 @@ def home_screen_views(request):
 
 
 def home_view(request):
-    #if not request.is_secure():
+    # if not request.is_secure():
     #    return HttpResponseRedirect('https://www.premiumcollectionpoint.com')
     return render(request, 'Home.html')
 
 
+def contactus(request):
+    return render(request, 'contact.html')
+
+def termsandconditions(request):
+    return render(request, 'termsandcontitons.html')
+
+def privacypolicy(request):
+    return render(request, 'privacypolicy.html')

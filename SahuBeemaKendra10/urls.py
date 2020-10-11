@@ -4,7 +4,10 @@ from django.contrib.auth import views as auth_views
 
 # from .views import home_screen_views
 from SahuBeemaKendra10.views import (
-    home_view
+    home_view,
+    contactus,
+    termsandconditions,
+    privacypolicy,
 )
 from account.views import (
     registration_view,
@@ -73,6 +76,10 @@ urlpatterns = [
     # Common Url's
     path('getkyc', getKycied, name='getkyc'),
     path('', home_view, name='home'),
+    path('contactus', contactus, name='contactus'),
+    path('termandconditions', termsandconditions, name='termandconditions'),
+    path('privacypolicy', privacypolicy, name='privacypolicy'),
+
 
     # Django Accounts Url's
     path('register/', registration_view, name='register'),
