@@ -2,6 +2,11 @@ import time
 
 from django.core.mail import send_mail
 from selenium import webdriver
+
+#for ubuntu
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+
 import random
 import string
 from django.shortcuts import render, redirect
@@ -357,7 +362,13 @@ def allOrdersBranch(request):
 
 
 def fetchPremiumdetails(policyNumber, createdBy, count):
-    driver = webdriver.ChromiumEdge(r"C:\Users\Administrator\Desktop\awspcp\branch\msedgedriver.exe")
+    #driver = webdriver.ChromiumEdge(r"C:\Users\Administrator\Desktop\awspcp\branch\msedgedriver.exe")
+    
+    #ubuntu
+    chromeOptions = Options()
+    chromeOptions.headless = False
+    driver = webdriver.Chrome(executable_path="/home/arpansahu/Desktop/awspcp/branch/chromedriver", options=chromeOptions)
+    #heroku 
     #chrome_options = webdriver.ChromeOptions()
     #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     #chrome_options.add_argument("--headless")
