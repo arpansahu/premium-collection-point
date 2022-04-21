@@ -248,16 +248,16 @@ def fetch_premium(policyNumber, created_by, count):
     # driver = webdriver.ChromiumEdge(r"C:\Users\Administrator\Desktop\awspcp\branch\msedgedriver.exe")
 
     # ubuntu
-    chrome_options = Options()
-    chrome_options.headless = False
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+    # chrome_options = Options()
+    # chrome_options.headless = False
+    # driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
     # heroku
-    # chrome_options = webdriver.ChromeOptions()
-    # chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    # chrome_options.add_argument("--headless")
-    # chrome_options.add_argument("--disable-dev-shm-usage")
-    # chrome_options.add_argument("--no-sandbox")
-    # driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
     try:
         driver.get("https://www.amazon.in/hfc/bill/insurance?ref_=apay_deskhome_Insurance")
