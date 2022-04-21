@@ -1,4 +1,4 @@
-{% extends 'branch/branchbase.html' %}
+{% extends 'branch/branch_base.html' %}
 {% load static %}
 {% block content %}
 
@@ -8,12 +8,12 @@
     <div style="height: 90%; width: 100%; padding: 20px" >
 
         <span class="contact1-form-title">
-                        Wrong Details
+                        Referred Successfully
         </span>
         <div class="container-contact1-form-btn">
                         <button  type="submit"  value="Submit" class="contact1-form-btn">
-                            <a href="{% url 'addmoney' %}" style="font-family: Montserrat-ExtraBold">
-                                Click here to Go back to Enter Coupon Code and Tran Id
+                            <a href="{% url 'wallet' %}" style="font-family: Montserrat-ExtraBold">
+                                Click here to Go back to wallet
                                 <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                             </a>
                         </button>

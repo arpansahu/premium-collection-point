@@ -1,10 +1,10 @@
-{% extends 'manager/managerBase.html' %}
+{% extends 'manager/manager_base.html' %}
 {% load static %}
 
 
 {% block content %}
-
-
+    <style href="{% static 'calenderForm/calenderForm.css' %}"></style>
+    <script href="{% static 'calenderForm/calenderForm.js' %}"></script>
 
     <style>
         .form-inline {
@@ -50,22 +50,7 @@
             align-items: stretch;
           }
         }
-        .col-1 {
-            max-width: 800px;
-            padding: 30px;
-            float: left;
-            height: 50%;
-            z-index: 1010101010
-        }
 
-        .col-2 {
-            max-width: 500px;
-            padding: 30px;
-            text-align: center;
-            float: top;
-            height: 50%;
-            z-index: 1010101010
-        }
 
 
     </style>
@@ -79,21 +64,14 @@
                 <form method="post" class="form-inline" style="background-color: transparent">
                     {% csrf_token %}
 
-<!--                     <h3 style="font-weight: bolder;color: #666666;">Approve Coupon Code</h3> -->
-			<h3 style="font-weight: bolder;color: #666666;margin-left: 110px;">Approve Coupon Code</h3>
-
-
+                    <h4 style="font-weight: bolder;color: #666666;margin-left: 40px;">Select Dates From and To For Money Order</h4>
                     <div  data-validate = "Message is required">
-                        <input class="input1" type="text" name="transactionId" value="Transaction Id" onclick="this.value=''">
+                        <input class="input1" type="date" name="date_from" value="Date From" onclick="this.value=''">
                         <span class="shadow-input1"></span>
                     </div>
-
                     <div  data-validate = "Message is required">
-                        <input list="tranActions" name="transactionAction" value="Choose Action" onclick="this.value=''">
-                            <datalist id="tranActions">
-                                <option value="APPROVE">
-                                <option value="DECLINE">
-                            </datalist>
+                        <input class="input1" type="date" name="date_to" value="Date to" onclick="this.value=''">
+                        <span class="shadow-input1"></span>
                     </div>
 
 
@@ -108,15 +86,12 @@
 
 			    </form>
 
-
             </div>
 
 
-            <div   >
-
+            <div style="margin-top: 70px">
                 <table class="table table-hover " style="counter-reset: rowNumber;overflow:scroll;max-width: 100%; table-layout: fixed  ">
-<!--                     <caption style=" color: black;font-weight: bolder  ;caption-side: top;text-align: center;">Money Orders</caption> -->
-			<caption style="color: black;font-weight: bolder;caption-side: top;text-align: center;margin-top: 70px;">Money Orders</caption>
+                    <caption style=" color: black;font-weight: bolder  ;caption-side: top;text-align: center;">Money Orders</caption>
                     <thead>
                         </tr>
                         <tr>
@@ -134,32 +109,26 @@
                         </tr>
                     </thead>
                     <tbody>
-
-                        {% for i in orderdlist %}
+                        {% for i in all_orders %}
                             <tr style="color: black;font-weight: bolder  ;word-wrap: break-word">
-                                {% for z in i.values %}
-
-                                        <td>{{ z }}</td>
-
-                                {% endfor %}
-
+                                <td>{{ i.id }}</td>
+                                <td>{{ i.order_created_by.email }}</td>
+                                <td>{{ i.order_amount }}</td>
+                                <td>{{ i.date }}</td>
+                                <td>{{ i.time }}</td>
+                                <td>{{ i.order_mode }}</td>
+                                <td>{{ i.From }}</td>
+                                <td>{{ i.order_status }}</td>
+                                <td>{{ i.order_remark }}</td>
+                                <td>{{ i.order_coupon_code }}</td>
+                                <td>{{ i.order_status }}</td>
                             </tr>
-
                         {% endfor %}
-
                     </tbody>
                 </table>
-
             </div>
-
-
-
-
-
-
-
-
     </div>
+
 
 
 {% endblock %}

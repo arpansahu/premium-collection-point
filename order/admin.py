@@ -1,5 +1,5 @@
 from django.contrib import admin
-from order.models import Order, moneyOrder
+from order.models import Order, Moneyorder
 
 # Register your models here.
 from django.contrib.auth.admin import UserAdmin
@@ -7,7 +7,7 @@ from django.contrib.auth.admin import UserAdmin
 
 class AccountAdmin(Order):
     # list_display = ('username',)
-    search_fields = ('policyNumber', 'policyHolderName',)
+    search_fields = ('policy_number', 'policy_holder_name',)
     readonly_fields = ('date', 'lamount')
 
     filter_horizontal = ()
@@ -16,4 +16,4 @@ class AccountAdmin(Order):
 
 
 admin.site.register(Order)
-admin.site.register(moneyOrder)
+admin.site.register(Moneyorder)

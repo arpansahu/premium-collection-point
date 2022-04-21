@@ -1,4 +1,4 @@
-{% extends 'branch/branchbase.html' %}
+{% extends 'branch/branch_base.html' %}
 {% load static %}
 {% block content %}
 
@@ -68,24 +68,22 @@
                     </tr>
                 </thead>
                 <tbody>
-
-                    {% for i in myOrders %}
+                    {% for i in all_orders %}
                         <tr style="color: black;font-weight: bolder  ;">
-
-                            {% for z in i.values %}
-
-                                    <td>{{ z }}</td>
-
-                            {% endfor %}
-
+                            <td>{{ i.id }}</td>
+                            <td>{{ i.policy_number }}</td>
+                            <td>{{ i.policy_holder_name }}</td>
+                            <td>{{ i.amount }}</td>
+                            <td>{{ i.due_date }}</td>
+                            <td>{{ i.time }}</td>
+                            <td>{{ i.completed }}</td>
                         </tr>
-
                     {% endfor %}
                 </tbody>
                 <tfoot style=" color: black;font-weight: bolder  ;font-family: Montserrat-ExtraBold;">
                         <tr>
                           <th id="total" colspan="3">Total :</th>
-                          <td>{{ totalAmount }}</td>
+                          <td>{{ total_amount }}</td>
                         </tr>
                 </tfoot>
             </table>
@@ -103,7 +101,7 @@
                     </span>
 
                     <div class="wrap-input1 validate-input" data-validate = "Message is required">
-                        <input class="input1" type="text" name="policyNumber">
+                        <input class="input1" type="text" name="policy_number">
                         <span class="shadow-input1"></span>
                     </div>
 

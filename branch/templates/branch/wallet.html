@@ -1,5 +1,5 @@
 
-{% extends 'branch/branchbase.html' %}
+{% extends 'branch/branch_base.html' %}
 {% load static %}
 {% block content %}
     
@@ -42,11 +42,11 @@
                         <path d="M16 6.5h-5.551a2.678 2.678 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5c-.963 0-1.613-.412-2.006-.958A2.679 2.679 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-6z"/>
                     </svg> 
                 <h3 class="btn btn-outline-primary">
-                    Your balance is :   {{ request.user.walletBalance|floatformat:2 }}
+                    Your balance is :   {{ request.user.wallet_balance|floatformat:2 }}
                 </h3>
-                <a class="btn btn-outline-primary" href="{% url 'mybranchearnings' %}">&#x20B9 My Earnings</a>
+                <a class="btn btn-outline-primary" href="{% url 'my_branch_earnings' %}">&#x20B9 My Earnings</a>
                 <a class="btn btn-outline-primary" href="{% url 'myalladddmoney' %}">Check All transactions</a>
-                <a class="btn btn-outline-primary" href="{% url 'addmoney' %}">Click here if you already have a coupon code</a>
+                <a class="btn btn-outline-primary" href="{% url 'add_money' %}">Click here if you already have a coupon code</a>
 
             </div>
 

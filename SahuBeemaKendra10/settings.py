@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-#import django_heroku
+# import django_heroku
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,10 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$uq(wzz06a+)mjinv0h_9m35*e0v#jk^92kz0nnq%r)v3u88mg'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(config('DEBUG', cast=bool, default=False))
+
+ALLOWED_HOSTS = [config('ALLOWED_HOSTS')]
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
@@ -87,15 +90,14 @@ WSGI_APPLICATION = 'SahuBeemaKendra10.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pcp',
-        'USER': 'postgres',
-        'PASSWORD': 'sabmadar302',
-        'HOST': 'pcppostgres.cjwqj74uxovy.ap-south-1.rds.amazonaws.com',
-        'PORT': '5432',
-     }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
+    }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -131,20 +133,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_DIR = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [STATIC_DIR]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Activate Django-Heroku.
-#django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
-# SMPT Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'notifications.pcpoint@gmail.com'
-EMAIL_HOST_PASSWORD = 'uvclxfemkedfeqfz'
+EMAIL_HOST_USER = config('EMAIL_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = 'PremiumCollectionPointTeam <notifications.pcpoint@gmail.com>'
-
-

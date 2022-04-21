@@ -7,9 +7,9 @@ from django.shortcuts import render, redirect
 def home_screen_views(request):
     if request.user.is_authenticated:
         if request.user.is_staff:
-            return render(request, template_name='manager/managerHome.html')
+            return render(request, template_name='manager/manager_home.html')
 
-        return render(request, template_name='branch/branchHome.html')
+        return render(request, template_name='branch/branch_home.html')
 
     return render(request, template_name='account/login.html')
 

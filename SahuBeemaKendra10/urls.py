@@ -14,34 +14,34 @@ from account.views import (
     logout_view,
     login_view,
     account_view,
-    getKycied,
+    get_kyc,
 
 )
 
 from branch.views import (
-    branchHome,
-    confirmOrder,
-    orderPlaced,
+    branch_home,
+    confirm_order,
+    order_placed,
     wallet,
-    addmoney,
-    addMoneySuccessfull,
-    moneyOrderNotSuccessFull,
-    wrongCouponCode,
-    allOrdersBranch,
-    addMoneyPre,
-    myAllAddMoney,
-    mybranchEarnings,
+    add_money,
+    add_money_success,
+    money_order_not_success,
+    wrong_coupon_code,
+    all_orders_branch,
+    add_money_pre,
+    my_all_add_money,
+    my_branch_earnings,
     nobill,
-    referNEarn,
+    refer_n_earn,
 )
 
 from manager.views import (
-    managerHome,
-    moneyOrdersView,
-    invalidMoneyOrderDetails,
-    allOrdersManager,
-    invalidpremiumOrderDetails,
-    allMoneyOrdersManager,
+    manager_home,
+    money_orders,
+    invalid_money_order_details,
+    all_orders_manager,
+    invalid_premium_order_details,
+    all_money_orders_manager,
 
 )
 
@@ -50,31 +50,31 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Branch Url's
-    path('branchHome', branchHome, name='branchHome'),
-    path('orderPlaced', orderPlaced, name='orderPlaced'),
+    path('branch-home', branch_home, name='branch_home'),
+    path('order-placed', order_placed, name='order_placed'),
     path('wallet', wallet, name='wallet'),
-    path('addmoney', addmoney, name='addmoney'),
-    path('addmoneysuccessfull', addMoneySuccessfull, name='addmoneysuccessfull'),
-    path('moneyodernotsuccess', moneyOrderNotSuccessFull, name='moneyordernotsuccessfull'),
-    path('wrongcouponcode', wrongCouponCode, name='wrongcouponcode'),
-    path('allordersbranch', allOrdersBranch, name='allordersbranch'),
-    path('addmoneypre', addMoneyPre, name='addmoneypre'),
-    path('transactions', myAllAddMoney, name='myalladddmoney'),
-    path('mybranchearnings', mybranchEarnings, name='mybranchearnings'),
+    path('add_money', add_money, name='add_money'),
+    path('add-money-success', add_money_success, name='add_money_success'),
+    path('money-order-not-success', money_order_not_success, name='money_order_not_success'),
+    path('wrong-coupon-code', wrong_coupon_code, name='wrong_coupon_code'),
+    path('all-orders-branch', all_orders_branch, name='all_orders_branch'),
+    path('add-money-pre', add_money_pre, name='add_money_pre'),
+    path('transactions', my_all_add_money, name='myalladddmoney'),
+    path('my-branch-earnings', my_branch_earnings, name='my_branch_earnings'),
     path('nobill', nobill, name='nobill'),
-    path('refernearn', referNEarn, name='refernearn'),
+    path('refer-n-earn', refer_n_earn, name='refer_n_earn'),
 
 
     # Manager Url's
-    path('managerHome', managerHome, name='managerHome'),
-    path('allmoneyordersmanager', allMoneyOrdersManager, name='allmoneyordersmanager'),
-    path('allordersmanager', allOrdersManager, name='allordersmanager'),
-    path('moneyorders', moneyOrdersView, name='moneyorders'),
-    path('invalidmoneyorderdetails', invalidMoneyOrderDetails, name='invalidmoneyorderdetails'),
-    path('invalidpremiumorderdetails', invalidpremiumOrderDetails, name='invalidpremiumorderdetails'),
+    path('manager_home', manager_home, name='manager_home'),
+    path('all_money_orders_manager', all_money_orders_manager, name='all_money_orders_manager'),
+    path('all_orders_manager', all_orders_manager, name='all_orders_manager'),
+    path('money-orders', money_orders, name='money_orders'),
+    path('invalid-money-order-details', invalid_money_order_details, name='invalid_money_order_details'),
+    path('invalid-premium-order-details', invalid_premium_order_details, name='invalid_premium_order_details'),
 
     # Common Url's
-    path('getkyc', getKycied, name='getkyc'),
+    path('get-kyc', get_kyc, name='get_kyc'),
     path('', home_view, name='home'),
     path('contactus', contactus, name='contactus'),
     path('termandconditions', termsandconditions, name='termandconditions'),
@@ -87,7 +87,7 @@ urlpatterns = [
     path('login/', login_view, name='login'),
 
     path('account/', account_view, name='account'),
-    path('confirmOrder/<slug:policyNumber>', confirmOrder, name='confirmOrder'),
+    path('confirm_order/<slug:policy_number>', confirm_order, name='confirm_order'),
 
     # Password reset links (ref: https://github.com/django/django/blob/master/django/contrib/auth/views.py)
     path('password_change/done/',

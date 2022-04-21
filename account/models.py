@@ -3,6 +3,8 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 
 # Create your models here.
+from account.choices import ROLE_CHOICES
+
 
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, password):
@@ -42,15 +44,15 @@ class Account(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    is_kycied = models.BooleanField(default=False)
+    is_kyc = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    role = models.CharField(max_length=20)
+    role = models.IntegerField(choices=ROLE_CHOICES)
     mobile = models.CharField(max_length=10)
-    adhaar = models.CharField(max_length=12)
+    adhaar_number = models.CharField(max_length=12)
     pan = models.CharField(max_length=10)
-    walletBalance = models.FloatField(default=0.00)
+    wallet_balance = models.FloatField(default=0.00)
     supervisor = models.CharField(max_length=60)
-    referredBy = models.EmailField(verbose_name="email", max_length=60, default='arpanrocks95@gmail.com')
+    referred_by = models.EmailField(verbose_name="email", max_length=60, default='admin@arpansahu.me')
     drive = models.URLField(default="#")
 
     USERNAME_FIELD = 'email'
@@ -67,8 +69,8 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-    def getSupervisor(self):
+    def get_supervisor(self):
         return self.supervisor
 
-    def getisKyc(self):
-        return self.is_kycied
+    def get_is_kyc(self):
+        return self.is_kyc

@@ -14,8 +14,8 @@ policnumber = driver.find_element_by_xpath('//*[@id="Policy Number"]')
 policnumber.send_keys('356819112')
 time.sleep(3)
 
-emailid = driver.find_element_by_xpath('//*[@id="Email id"]')
-emailid.send_keys('sabsahi@gmail.com')
+email_id = driver.find_element_by_xpath('//*[@id="Email id"]')
+email_id.send_keys('sabsahi@gmail.com')
 time.sleep(3)
 
 driver.find_element_by_id('fetchBillActionId-announce').click()

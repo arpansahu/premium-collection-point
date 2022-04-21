@@ -1,8 +1,9 @@
 import random
+import random
 import string
 
 from django.shortcuts import render, redirect
-from order.models import moneyOrder, Order
+from order.models import Moneyorder, Order
 from account.models import Account
 import datetime
 from django.http import HttpResponseRedirect
@@ -18,293 +19,175 @@ def generateCouponCode(amount):
     return result_str + str(amount)
 
 
-def allMoneyOrdersManager(request):
+def all_money_orders_manager(request):
     if request.user.is_authenticated:
-        if request.user.is_kycied:
+        if request.user.is_kyc:
             if not request.user.is_staff:
-                return redirect('branchHome')
+                return redirect('branch_home')
 
             if request.POST:
-                datefrom = request.POST['dateFrom']
-                dateto = request.POST['dateTo']
-                print(datetime.date.today())
-                print(datefrom, dateto)
+                date_from = request.POST['date_from']
+                date_to = request.POST['date_to']
 
-                allordersobjects0 = moneyOrder.objects.filter(orderApprovedBy=request.user.email, type="CREDIT")
-                allordersobjects = allordersobjects0.filter(date__range=
-                                                            [datefrom, dateto]).order_by('date', 'time')
+                all_orders = Moneyorder.objects.filter(order_approved_by=request.user.email, order_type=1, date__range=
+                                                            [date_from, date_to]).order_by('date', 'time')
 
-                ordersarray = []
+                return render(request, 'manager/all_money_orders_manager.html', {'all_orders': all_orders})
 
-                for i in allordersobjects:
-                    orderlist = {}
+            all_orders = Moneyorder.objects.filter(order_approved_by=request.user.email, order_type=1, date=datetime.date.today()).order_by('time')
 
-                    orderlist['id'] = i.id
-                    orderlist['orderCreatedBy'] = i.orderCreatedBy
-                    # orderlist['orderApprovedBy'] = i.orderApprovedBy
-                    orderlist['orderAmount'] = i.orderAmount
-                    orderlist['orderDate'] = i.date
-                    orderlist['orderTime'] = i.time
-                    orderlist['orderMode'] = i.orderMode
-                    orderlist['From'] = i.From
-                    orderlist['orderStatus'] = i.orderStatus
-                    orderlist['orderRemark'] = i.orderRemark
-                    orderlist['orderCouponCode'] = i.orderCouponCode
-                    orderlist['isApproved'] = i.isApproved
-
-                    ordersarray.append(orderlist)
-
-                return render(request, 'manager/allMoneyOrdersmanager.html', {'allorders': ordersarray})
-
-            ordersOfBranchI0 = moneyOrder.objects.filter(orderApprovedBy=request.user.email, type="CREDIT")
-            ordersOfBranchI = ordersOfBranchI0.filter(date=datetime.date.today()).order_by('time')
-
-            ordersarray = []
-
-            for i in ordersOfBranchI:
-                orderlist = {}
-
-                orderlist['id'] = i.id
-                orderlist['orderCreatedBy'] = i.orderCreatedBy
-                # orderlist['orderApprovedBy'] = i.orderApprovedBy
-                orderlist['orderAmount'] = i.orderAmount
-                orderlist['orderDate'] = i.date
-                orderlist['orderTime'] = i.time
-                orderlist['orderMode'] = i.orderMode
-                orderlist['From'] = i.From
-                orderlist['orderStatus'] = i.orderStatus
-                orderlist['orderRemark'] = i.orderRemark
-                orderlist['orderCouponCode'] = i.orderCouponCode
-                orderlist['isApproved'] = i.isApproved
-
-                ordersarray.append(orderlist)
-
-            return render(request, 'manager/allMoneyOrdersmanager.html', {'allorders': ordersarray})
+            return render(request, 'manager/all_money_orders_manager.html', {'all_orders': all_orders})
         else:
-            return redirect('getkyc')
+            return redirect('get_kyc')
     return redirect('login')
 
 
-def allOrdersManager(request):
+def all_orders_manager(request):
     if request.user.is_authenticated:
-        if request.user.is_kycied:
+        if request.user.is_kyc:
             if not request.user.is_staff:
-                return redirect('branchHome')
+                return redirect('branch_home')
 
             if request.POST:
-                datefrom = request.POST['dateFrom']
-                dateto = request.POST['dateTo']
-                print(datetime.date.today())
-                print(datefrom, dateto)
+                date_from = request.POST['date_from']
+                date_to = request.POST['date_to']
 
-                allorderslist = []
+                all_orders = Order.objects.filter(approved_by=request.user.email, date__range=
+                [date_from, date_to]).order_by('date', 'time')
 
-                allordersobjects0 = Order.objects.filter(approvedBy=request.user.email)
-                allordersobjects = allordersobjects0.filter(date__range=
-                                                            [datefrom, dateto]).order_by('date', 'time')
+                return render(request, 'manager/all_orders_manager.html', {'all_orders': all_orders})
 
-                for j in allordersobjects:
-                    temporder = {}
-
-                    temporder['id'] = j.id
-                    temporder['policyNumber'] = j.policyNumber
-                    temporder['policyHolder'] = j.policyHolderName
-                    temporder['amount'] = j.amount
-                    temporder['Due'] = j.dueDate
-                    temporder['createdBy'] = j.createdBy
-                    temporder['completed'] = j.completed
-
-                    allorderslist.append(temporder)
-
-                return render(request, 'manager/allOrdersManager.html', {'allorders': allorderslist})
-
-            allOrdersOfCurrentManager = []
-
-            ordersOfBranchI0 = Order.objects.filter(approvedBy=request.user.email)
-            ordersOfBranchI = ordersOfBranchI0.filter(date=datetime.date.today()).order_by('time')
-            for j in ordersOfBranchI:
-                temporders = {}
-
-                temporders['id'] = j.id
-                temporders['policyNumber'] = j.policyNumber
-                temporders['policyHolder'] = j.policyHolderName
-                temporders['amount'] = j.amount
-                temporders['Due'] = j.dueDate
-                temporders['createdBy'] = j.createdBy
-                temporders['completed'] = j.completed
-
-                allOrdersOfCurrentManager.append(temporders)
-
-            return render(request, 'manager/allOrdersManager.html', {'allorders': allOrdersOfCurrentManager})
+            all_orders = Order.objects.filter(approved_by=request.user.email, date=datetime.date.today()).order_by(
+                'time')
+            return render(request, 'manager/all_orders_manager.html', {'all_orders': all_orders})
         else:
-            return redirect('getkyc')
+            return redirect('get_kyc')
     return redirect('login')
 
 
-def invalidMoneyOrderDetails(request):
-    return render(request, 'manager/invalidMoneyOrderDetails.html')
+def invalid_money_order_details(request):
+    return render(request, 'manager/invalid_money_order_details.html')
 
 
-def invalidpremiumOrderDetails(request):
-    return render(request, 'manager/invalidPremiumOrderDetails.html')
+def invalid_premium_order_details(request):
+    return render(request, 'manager/invalid_premium_orders_details.html')
 
 
-def managerHome(request):
+def manager_home(request):
     if request.user.is_authenticated:
-        if request.user.is_kycied:
-            #if not request.is_secure():
+        if request.user.is_kyc:
+            # if not request.is_secure():
             #    return HttpResponseRedirect('https://www.premiumcollectionpoint.com')
             if not request.user.is_staff:
-                return redirect('branchHome')
+                return redirect('branch_home')
             if request.POST:
                 try:
+                    breakpoint()
                     orderid = request.POST['orderId']
 
                     order = Order.objects.filter(id=orderid).first()
                     order.completed = True
                     order.save()
-                    moneyOrder.create(order.amount, order.createdBy, request.user.email,
-                                      generateCouponCode(order.amount), 'PREMIUM',
-                                      order.policyNumber, "DEBIT", True, True).save()
+                    Moneyorder(order_amount=order.amount, order_created_by=order.created_by,
+                               order_approved_by=request.user.email,
+                               order_coupon_code=generateCouponCode(order.amount),
+                               order_remark='PREMIUM',
+                               From=order.policy_number,
+                               order_type=2, is_approved=True, order_status= True).save()
 
-                    return redirect('managerHome')
+                    return redirect('manager_home')
                 except:
-                    return redirect('invalidpremiumorderdetails')
+                    return redirect('invalid_premium_order_details')
 
-            allOrdersOfCurrentManager = []
+            orders_my_branch = Order.objects.filter(approved_by=request.user.email,
+                                                    date=datetime.date.today()).order_by('time')
 
-            ordersOfBranchI0 = Order.objects.filter(approvedBy=request.user.email)
-            ordersOfBranchI1 = ordersOfBranchI0.filter(date=datetime.date.today()).order_by('time')
-
-            for j in ordersOfBranchI1:
-                temporders = {}
-
-                temporders['id'] = j.id
-                temporders['policyNumber'] = j.policyNumber
-                temporders['policyHolder'] = j.policyHolderName
-                temporders['amount'] = j.amount
-                temporders['Due'] = j.dueDate
-                temporders['createdBy'] = j.createdBy
-                temporders['completed'] = j.completed
-
-                allOrdersOfCurrentManager.append(temporders)
-
-            return render(request, 'manager/managerHome.html', {'allorders': allOrdersOfCurrentManager})
+            return render(request, 'manager/manager_home.html', {'orders_my_branch': orders_my_branch})
         else:
-            return redirect('getkyc')
+            return redirect('get_kyc')
     return redirect('login')
 
 
-def moneyOrdersView(request):
+def money_orders(request):
     if request.user.is_authenticated:
-        if request.user.is_kycied:
+        if request.user.is_kyc:
             if not request.user.is_staff:
-                return redirect('branchHome')
+                return redirect('branch_home')
             if request.POST:
+                transaction_id = request.POST['transaction_id']
+                order_action = request.POST['transaction_action']
+                breakpoint()
+                # try:
+                money_order = Moneyorder.objects.get(order_coupon_code=transaction_id, order_type=1)
+                # except:
+                #     return redirect('money_orders')
 
-                transactionId = request.POST['transactionId']
+                amount = money_order.order_amount
+                coupon_code = money_order.order_coupon_code
+                tran_from = money_order.From
+                tran_mode = money_order.order_mode
+                # branch_email = money_order.order_created_by
+                branch_email = 'arpanrocks95@gmail.com'
 
-                orderAction = request.POST['transactionAction']
-                branchEmail = ''
-                apprTrans = moneyOrder.objects.filter(id=transactionId, type="CREDIT")
-
-                if apprTrans.count() == 0:
-                    return redirect('')
-                tranmode = ''
-                tranfrom = ''
-                amount = 0
-                couponCode = ''
-
-                for i in apprTrans:
-                    amount = i.orderAmount
-                    couponCode = i.orderCouponCode
-                    tranfrom = i.From
-                    tranmode = i.orderMode
-                    branchEmail = i.orderCreatedBy
-
-                if orderAction == "DECLINE":
-                    if tranmode == "UPI":
+                if order_action == "DECLINE":
+                    if tran_mode == 1:
                         subject = 'Money Order Declined'
                         message = 'Your Money order request with Amount: {0} has been declined due to incorrect ' \
                                   'information\nPlease Enter correct information while placing a money order ' \
                                   'request.\nNote: While filling FROM in UPI Transactions please enter your UPI ' \
                                   'instead of {1}' \
                                   'Address from which you are transferring money\nRegards ,\nPremium Collection Point ' \
-                                  'Team'.format(amount, tranfrom)
+                                  'Team'.format(amount, tran_from)
 
                         email_from = settings.EMAIL_HOST_USER
-                        recipient_list = [branchEmail, ]
+                        recipient_list = [branch_email, ]
                         send_mail(subject, message, email_from, recipient_list)
 
-                    elif tranmode == "BankTransfer":
+                    elif tran_mode == 2:
                         subject = 'Money Order Declined'
                         message = 'Your Money order request with Amount: {0} has been declined due to incorrect ' \
                                   'information\nPlease Enter correct information while placing a money order ' \
                                   'request.\nNote: While filling FROM in BankTransfer IMPS/NEFT/RTGS Transactions ' \
                                   'please enter transaction ref no instead of {1}, which you can check in your mobile ' \
                                   'banking ' \
-                                  'app\nRegards ,\nPremium Collection Point Team'.format(amount, tranfrom)
+                                  'app\nRegards ,\nPremium Collection Point Team'.format(amount, tran_from)
 
                         email_from = settings.EMAIL_HOST_USER
-                        recipient_list = [branchEmail, ]
+                        recipient_list = [branch_email, ]
                         send_mail(subject, message, email_from, recipient_list)
 
-                    elif tranmode == "QR":
+                    elif tran_mode == 3:
                         subject = 'Money Order Declined'
                         message = 'Your Money order request with Amount: {0} has been declined due to incorrect ' \
                                   'information\nPlease Enter correct information while placing a money order ' \
-                                  'request.\nNote: While filling FROM in  QR Transactions ' \
+                                  'request.\nNote: While filling FROM in CASH Transactions ' \
                                   'please enter BANK ACCOUNT holders name instead of {1}, which you can check in your ' \
                                   'mobile banking ' \
-                                  'app\nRegards ,\nPremium Collection Point Team'.format(amount, tranfrom)
+                                  'app\nRegards ,\nPremium Collection Point Team'.format(amount, tran_from)
                         email_from = settings.EMAIL_HOST_USER
-                        recipient_list = [branchEmail, ]
+                        recipient_list = [branch_email, ]
                         send_mail(subject, message, email_from, recipient_list)
 
-                    for i in apprTrans:
-                        if not i.orderStatus:
-                            apprTrans.delete()
+                    money_order.delete()
 
-                elif orderAction == "APPROVE":
+                elif order_action == "APPROVE":
                     subject = 'Money Order Details'
-                    message = 'Amount: {0}\nTransaction Id: {1}\nCoupon Code: {2}'.format(amount, transactionId,
-                                                                                          couponCode)
+                    message = 'Amount: {0}\nTransaction Id: {1}\nCoupon Code: {2}'.format(money_order.order_amount,
+                                                                                          money_order.id,
+                                                                                          money_order.order_coupon_code)
                     email_from = settings.EMAIL_HOST_USER
-                    recipient_list = [branchEmail, ]
+                    recipient_list = [branch_email, ]
                     send_mail(subject, message, email_from, recipient_list)
 
-                    for i in apprTrans:
-                        i.isApproved = True
-                        i.save()
+                    money_order.is_approved = True
+                    money_order.save()
 
-                return redirect('moneyorders')
+                return redirect('money_orders')
 
-            orders = moneyOrder.objects.filter(orderApprovedBy=request.user.email)
-            orders = orders.filter(orderStatus=False, type="CREDIT")
-
-            ordersarray = []
-
-            for i in orders:
-                orderlist = {}
-
-                orderlist['id'] = i.id
-                orderlist['orderCreatedBy'] = i.orderCreatedBy
-                # orderlist['orderApprovedBy'] = i.orderApprovedBy
-                orderlist['orderAmount'] = i.orderAmount
-                orderlist['orderDate'] = i.date
-                orderlist['orderTime'] = i.time
-                orderlist['orderMode'] = i.orderMode
-                orderlist['From'] = i.From
-                orderlist['orderStatus'] = i.orderStatus
-                orderlist['orderRemark'] = i.orderRemark
-                orderlist['orderCouponCode'] = i.orderCouponCode
-                orderlist['isApproved'] = i.isApproved
-
-                ordersarray.append(orderlist)
-                # print(orderlist)
-            return render(request, 'manager/moneyorders.html', {'orderdlist': ordersarray})
+            orders = Moneyorder.objects.filter(order_approved_by=request.user.email, order_status=False, order_type=1)
+            return render(request, 'manager/money_orders.html', {'orders': orders})
 
         else:
-            return redirect('getkyc')
+            return redirect('get_kyc')
 
     return redirect('login')

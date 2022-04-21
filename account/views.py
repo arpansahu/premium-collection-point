@@ -35,15 +35,16 @@ def login_view(request):
     context = {}
 
     if request.user.is_authenticated:
-        if request.user.is_kycied:
+        if request.user.is_kyc:
             if request.user.is_staff:
-                return redirect('managerHome')
-            return redirect('branchHome')
+                return redirect('manager_home')
+            return redirect('branch_home')
         else:
-            return redirect('getkyc')
+            return redirect('get_kyc')
 
     if request.POST:
         form = AccountAuthenticationForm(request.POST)
+        # breakpoint()
         if form.is_valid():
             email = request.POST['email']
             password = request.POST['password']
@@ -81,7 +82,7 @@ def account_view(request):
     return render(request, 'account/account.html', context)
 
 
-def getKycied(request):
+def get_kyc(request):
     if request.user.is_authenticated:
-        return render(request, 'account/getkyc.html')
+        return render(request, 'account/get_kyc.html')
     return redirect('login')

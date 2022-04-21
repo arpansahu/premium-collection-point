@@ -1,5 +1,5 @@
 
-{% extends 'branch/branchbase.html' %}
+{% extends 'branch/branch_base.html' %}
 {% load static %}
 {% block content %}
     
@@ -36,8 +36,8 @@
 
 
             <div class="col-1"  >
-                <a class="btn btn-outline-primary" style="text-align: left; font-weight: bold" href="#">&#x20B9 My Earnings<br>MY: {{ myearnings }}<br>Referral: {{ referralearning }}<br>Total: {{ total }}</a>
-                <a class="btn btn-outline-primary" style="text-align: left; font-weight: bold" href="{% url 'refernearn' %}">Click here to know more about Refer N Earn</a>
+                <a class="btn btn-outline-primary" style="text-align: left; font-weight: bold" href="#">&#x20B9 My Earnings<br>MY: {{ my_earnings }}<br>Referral: {{ referral_earning }}<br>Total: {{ total }}</a>
+                <a class="btn btn-outline-primary" style="text-align: left; font-weight: bold" href="{% url 'refer_n_earn' %}">Click here to know more about Refer N Earn</a>
 
                 <form method="post" class="form-inline" style="background-color: white;">
                     {% csrf_token %}
@@ -46,11 +46,11 @@
 
 
                     <div  data-validate = "Message is required" style="margin-left: 15%">
-                        <input class="input1" type="date" name="dateFrom" value="Date From" onclick="this.value=''">
+                        <input class="input1" type="date" name="date_from" value="Date From" onclick="this.value=''">
                         <span class="shadow-input1"></span>
                     </div>
                     <div  data-validate = "Message is required" style="margin-top: 5px;margin-left: 15%;">
-                        <input class="input1" type="date" name="dateTo" value="Date to" onclick="this.value=''">
+                        <input class="input1" type="date" name="date_to" value="Date to" onclick="this.value=''">
                         <span class="shadow-input1"></span>
                     </div>
 

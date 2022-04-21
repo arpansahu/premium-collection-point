@@ -65,13 +65,12 @@
                     </div>
 
                     <div  data-validate = "Message is required" style=" margin-top: 5px;margin-left: 5px">
-                        <input list="transMode" name="tranMode" value="Choose Mode " onclick="this.value=''" style="background-color: #e6e6e6;">
-                            <datalist id="transMode">
-                                <option value="UPI">
-                                <option value="BankTransfer">
-                                <option value="CASH">
-                                <option value="Refund">
-                            </datalist>
+                        <select class="form-control" id="transaction_mode"  name="transaction_mode" style="background-color: #e6e6e6;">
+                            <option value=1>UPI</option>
+                            <option value=2>BANK TRANSFER</option>
+                            <option value=3>CASH</option>
+                            <option value=4>REFUND</option>
+                        </select>
                     </div>
 
                     <div class="container-contact1-form-btn" style=" margin-top: 5px;margin-left: 5px">
@@ -82,7 +81,6 @@
                             </span>
                         </button>
                     </div>
-
                 </form>
 
 
