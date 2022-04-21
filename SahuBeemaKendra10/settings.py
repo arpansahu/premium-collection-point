@@ -27,8 +27,8 @@ DEBUG = int(config('DEBUG', cast=bool, default=False))
 
 ALLOWED_HOSTS = [config('ALLOWED_HOSTS')]
 
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+# if DEBUG:
+#     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
 
 ALLOWED_HOSTS = ["*"]
 
