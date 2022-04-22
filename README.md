@@ -61,7 +61,15 @@ required. Note: since jan 2022 amazon pay started hiding premium holders name if
     - apart from default env variables add: variables for ChromeDriver and Chrome -
     - CHROMEDRIVER_PATH: /app/.chromedriver/bin/chromedriver
     - GOOGLE_CHROME_BIN: /app/.apt/usr/bin/google-chrome
-2. Postgres was used as database 
+2. Postgres was used as database
+
+_____
+Note: This project is hosted in Heroku as of now. which restricts a request to be fulfilled in max 30 seconds 
+otherwise requests will be terminated. If Bill Check Service don't work properly in Demo then problem is caused due to 
+this reason. I have myself hosted this project in AWS when it was in use. So I highly recommend to host it on AWS if you
+want to use yourself for some other purposes then demo.
+_____
+
 ## Tech Stack
 
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
