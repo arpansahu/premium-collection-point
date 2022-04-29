@@ -165,26 +165,56 @@ Create Heroku App
 
 Push Heroku App
 ```
-    git push heroku main
+    git push heroku master
 ```
 
-Configure Heroku App
+Apart from python build packs add:
+```
+https://github.com/heroku/heroku-buildpack-chromedriver (ChromeDriver)
+https://github.com/heroku/heroku-buildpack-google-chrome (Chrome)
+```
+
+Configure Heroku App Env Variables
 ```bash
-  add all the env variables used from app setting page on heroku app dashboard.
-  add build packs :
-    1. python
-    2. https://github.com/heroku/heroku-buildpack-chromedriver (ChromeDriver)
-    3. https://github.com/heroku/heroku-buildpack-google-chrome (Chrome)
-  apart from default env variables add: variables for ChromeDriver and Chrome -
-    CHROMEDRIVER_PATH: /app/.chromedriver/bin/chromedriver
-    GOOGLE_CHROME_BIN: /app/.apt/usr/bin/google-chrome
+  heroku config:se CHROMEDRIVER_PATH= /app/.chromedriver/bin/chromedriver
+  heroku config:se GOOGLE_CHROME_BIN= /app/.apt/usr/bin/google-chrome
+  heroku config:set GITHUB_USERNAME=joesmith
+  ...
 ```
+
+
 Configuring Django App for Heroku
+
+Install whitenoise 
 ```
-    install whitenoise : pip install whitenoise 
-    include it in included_apps=[]
-    add whitenoise middleware
-    add: procfile with command web: gunicorn SahuBeemaKendra10.wsgi
+pip install whitenoise 
+```
+
+Include it in Middlewares.
+```
+MIDDLEWARE = [
+    # ...
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # ...
+]
+```
+
+Create Procfile and include this code snippet in it.
+```
+release: ./release-tasks.sh
+web: gunicorn djangoProject.wsgi
+```
+
+Create release-task.sh for running multilple commands in run: section of procfile
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+Make relase-task.sh executable
+```
+chmod +x release-tasks.sh 
 ```
 ## Documentation
 
