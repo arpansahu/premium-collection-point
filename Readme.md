@@ -14,7 +14,7 @@ Challenges Faced By My Father during Pandemic:
 Solution To The Problem:
 1. Built a web portal which was looking trustworthy and was with the name of my fathers official branch name 
  i.e. Sahu Beema Kendra which was later renamed to Premium Collection Point.com
-2. Customers were used to pay in Cash to Sub branches \
+2. Customers were used to pay in Cash to Sub branches
 3. Sub-branches used to earn 1% commission of the total amount paid through their branch 
 4. Next day sub-branch owners used to deposit cash to their collected cash to their bank account, and they can 
     add money to their wallet using pcp-pay gateway
